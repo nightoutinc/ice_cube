@@ -69,6 +69,7 @@ module IceCube
       day
     end
     
+    # Convert an ical symbol to a numeric day
     def self.ical_day_to_symbol(str)
       day = ICAL_DAYS[str]
       raise "No such day: #{str}" if day.nil?

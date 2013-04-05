@@ -622,13 +622,14 @@ describe IceCube::Schedule, 'occurs_on?' do
   end
 
   it 'should be able to work with occurs_on? at an odd time - start of day' do
-    Time.zone = 'Eastern Time (US & Canada)'
-    schedule = IceCube::Schedule.new(Time.zone.local(2010, 8, 10, 0, 0, 0))
-    schedule.add_recurrence_rule IceCube::Rule.weekly
-    schedule.occurs_on?(Date.new(2010, 8, 10)).should be(true)
-    schedule.occurs_on?(Date.new(2010, 8, 11)).should be(false)
-    schedule.occurs_on?(Date.new(2010, 8, 9)).should be(false)
-    schedule.occurs_on?(Date.new(2010, 8, 17)).should be(true)
+    Time.use_zone 'Eastern Time (US & Canada)' do
+      schedule = IceCube::Schedule.new(Time.zone.local(2010, 8, 10, 0, 0, 0))
+      schedule.add_recurrence_rule IceCube::Rule.weekly
+      schedule.occurs_on?(Date.new(2010, 8, 10)).should be(true)
+      schedule.occurs_on?(Date.new(2010, 8, 11)).should be(false)
+      schedule.occurs_on?(Date.new(2010, 8, 9)).should be(false)
+      schedule.occurs_on?(Date.new(2010, 8, 17)).should be(true)
+    end
   end
 
   it 'should be able to work with occurs_on? at an odd time - end of day' do
@@ -780,4 +781,3 @@ describe IceCube::Schedule, 'occurs_on?' do
   end
 
 end
-
